@@ -22,9 +22,9 @@ module Twine
       def determine_language_given_path(path)
         path_arr = path.split(File::SEPARATOR)
         path_arr.each do |segment|
-          match = /(..)\.po$/.match(segment)
+          match = /.+?(?=.po)/.match(segment)
           if match
-            return match[1]
+            return match[0]
           end
         end
 
@@ -71,7 +71,7 @@ module Twine
       end
 
       def format_header(lang)
-        "msgid \"\"\nmsgstr \"\"\n\"Language: #{lang}\\n\"\n\"X-Generator: Twine #{Twine::VERSION}\\n\"\n"
+        "msgid \"\"\nmsgstr \"\"\n\"Language: #{lang}\\n\"\n\"X-Generator: Twine #{Twine::VERSION}\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n"
       end
 
       def format_section_header(section)
